@@ -7,6 +7,7 @@ define('THEME_THEMEROOT',get_stylesheet_directory_uri());
 define('THEME_IMAGES',THEME_THEMEROOT.'/images');
 define('THEME_JS',THEME_THEMEROOT.'/js');
 define('THEME_CSS',THEME_THEMEROOT.'/css');
+update_option( 'maya_logo', THEME_IMAGES.'/maya-logo.png' );
 /**********************************************************************************************************************/
 /****************************************defines theme supports*******************************************************/
 /**********************************************************************************************************************/
@@ -31,20 +32,20 @@ if ( function_exists ('register_sidebar')) {
 /*********************************************************************************************************************/
 function theme_front_scripts() {
     wp_enqueue_script('jquery');
-    wp_enqueue_script('popper-js','https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array('jquery'),'1.0',true);
-    wp_script_add_data( 'popper-js', 'integrity', 'sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49' );
+    wp_enqueue_script('popper-js','https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', array('jquery'),'1.0',true);
+    wp_script_add_data( 'popper-js', 'integrity', 'sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W' );
     wp_script_add_data( 'popper-js', 'crossorigin', 'anonymous' );
 
-    wp_enqueue_script('bootstrap-js','https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', array('jquery'),'1.0',true);
-    wp_script_add_data( 'bootstrap-js', 'integrity', 'sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy' );
+    wp_enqueue_script('bootstrap-js','https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery'),'1.0',true);
+    wp_script_add_data( 'bootstrap-js', 'integrity', 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' );
     wp_script_add_data( 'bootstrap-js', 'crossorigin', 'anonymous' );
 
     wp_enqueue_script('webfont-js','https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js', array('jquery'),'1.0',true);
     $api_key = ( get_field( 'google_api' , 'option' ) ) ? get_field( 'google_api' , 'option' ) : 'AIzaSyB_DH4yRoGB0aoM3IZFvWOIP2qNbFh_bIs' ;
     wp_enqueue_script('googleapis-js','https://maps.googleapis.com/maps/api/js?key='.$api_key, array('jquery'),'1.0',true);
     wp_enqueue_script('acf-map-js',THEME_JS.'/acf_map.js', array('jquery'),'1.0',true);
-    wp_enqueue_script('mmenu-js','https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.6/jquery.mmenu.all.js', array('jquery'),'1.0',false); 
-    wp_enqueue_script('custom-js',THEME_JS.'/custom.js', array('jquery'),'1.0',true);
+    wp_enqueue_script('mmenu-js','https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.6/jquery.mmenu.all.js', array('jquery'),'1.0',false);
+	wp_enqueue_script('custom-js',THEME_JS.'/custom.js', array('jquery'),'1.0',true);
 }
 add_action('wp_enqueue_scripts', 'theme_front_scripts');
 
@@ -53,13 +54,13 @@ function theme_front_styles() {
     global $wp_styles;
     wp_enqueue_style('theme-styles',THEME_THEMEROOT.'/style.css', array(),'1.0','screen');
     wp_enqueue_style('master-styles',THEME_CSS.'/master.css', array(),'1.0','screen');
-    wp_enqueue_style('bootstrap-styles','https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', array(),'1.0','screen');
+    wp_enqueue_style('bootstrap-styles','https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(),'1.0','screen');
     wp_enqueue_style('mmenu-styles','https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.6/jquery.mmenu.all.css', array(),'1.0','screen');
-    wp_enqueue_style('fontawesome-styles','https://use.fontawesome.com/releases/v5.3.1/css/all.css', array(),'1.0','screen');
+    wp_enqueue_style('fontawesome-styles','https://use.fontawesome.com/releases/v5.7.2/css/all.css', array(),'1.0','screen');
 
-    $wp_styles->add_data( 'fontawesome-styles', 'integrity', 'sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU' );
+    $wp_styles->add_data( 'fontawesome-styles', 'integrity', 'sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr' );
     $wp_styles->add_data( 'fontawesome-styles', 'crossorigin', 'anonymous' );
-    $wp_styles->add_data( 'bootstrap-styles', 'integrity', 'sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' );
+    $wp_styles->add_data( 'bootstrap-styles', 'integrity', 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' );
     $wp_styles->add_data( 'bootstrap-styles', 'crossorigin', 'anonymous' );
 }
 add_action('wp_print_styles', 'theme_front_styles');
@@ -142,8 +143,8 @@ function theme_required_plugins_register() {
             'required'  => true,
         ),
         array(
-            'name'      => 'Google Analytics Dashboard for WP by ExactMetrics (formerly GADWP)',
-            'slug'      => 'google-analytics-dashboard-for-wp',
+            'name'      => 'ACF Content Analysis for Yoast SEO',
+            'slug'      => 'acf-content-analysis-for-yoast-seo',
             'required'  => true,
         ),
         array(
@@ -159,7 +160,17 @@ function theme_required_plugins_register() {
         array(
             'name'                  => 'Maya Simple Slider Wordpress', // The plugin name
             'slug'                  => 'maya-simple-sliderwp', // The plugin slug (typically the folder name)
-            'source'                => THEME_THEMEROOT . '/inc/admin/TGM-Plugin-Activation/plugins/maya-simple-sliderwp.zip', // The plugin source
+            'source'                => 'https://github.com/hettipower/maya-simple-sliderwp/archive/v1.0.zip', // The plugin source
+            'required'              => true, // If false, the plugin is only 'recommended' instead of required
+            'version'               => '', // E.g. 1.0.0. If set, the active plugin must be this version or higher, otherwise a notice is presented
+            'force_activation'      => false, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch
+            'force_deactivation'    => false, // If true, plugin is deactivated upon theme switch, useful for theme-specific plugins
+            'external_url'          => '', // If set, overrides default API URL and points to an external URL
+        ),
+        array(
+            'name'                  => 'Advanced Custom Fields: Theme Code Pro', // The plugin name
+            'slug'                  => 'acf-theme-code-pro', // The plugin slug (typically the folder name)
+            'source'                => THEME_THEMEROOT . '/inc/admin/TGM-Plugin-Activation/plugins/acf-theme-code-pro.zip', // The plugin source
             'required'              => true, // If false, the plugin is only 'recommended' instead of required
             'version'               => '', // E.g. 1.0.0. If set, the active plugin must be this version or higher, otherwise a notice is presented
             'force_activation'      => false, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch

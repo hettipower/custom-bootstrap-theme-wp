@@ -13,7 +13,6 @@ footer, header, hgroup, menu, nav, section, summary,
 time, mark, audio, video {margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;}
 body {line-height:1;}
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { display:block;}
-nav ul {x-list-style:none;}
 blockquote, q {quotes:none;}
 blockquote:before, blockquote:after,q:before, q:after {content:'';content:none;}
 a {margin:0;padding:0;font-size:100%;vertical-align:baseline;background:transparent;}
@@ -31,7 +30,6 @@ h2{font-size: 30px;}
 h3{font-size: 24px;}
 h4{font-size: 18px;}
 h5{font-size: 14px;}
-h6{font-size: 12px;}
 .clear{
   clear:both;
 }
