@@ -32,13 +32,8 @@ if ( function_exists ('register_sidebar')) {
 /*********************************************************************************************************************/
 function theme_front_scripts() {
     wp_enqueue_script('jquery');
-    wp_enqueue_script('popper-js','https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', array('jquery'),'1.0',true);
-    wp_script_add_data( 'popper-js', 'integrity', 'sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W' );
-    wp_script_add_data( 'popper-js', 'crossorigin', 'anonymous' );
-
+    wp_enqueue_script('popper-js',THEME_THEMEROOT.'/node_modules/popper.js/dist/popper.min.js', array('jquery'),'1.0',true);
     wp_enqueue_script('bootstrap-js',THEME_THEMEROOT.'/node_modules/bootstrap/dist/js/bootstrap.min.js', array('jquery'),'1.0',true);
-
-    wp_enqueue_script('webfont-js','https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js', array('jquery'),'1.0',true);
     $api_key = ( get_field( 'google_api' , 'option' ) ) ? get_field( 'google_api' , 'option' ) : 'AIzaSyB_DH4yRoGB0aoM3IZFvWOIP2qNbFh_bIs' ;
     wp_enqueue_script('googleapis-js','https://maps.googleapis.com/maps/api/js?key='.$api_key, array('jquery'),'1.0',true);
     wp_enqueue_script('acf-map-js',THEME_JS.'/acf_map.js', array('jquery'),'1.0',true);
