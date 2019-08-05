@@ -31,16 +31,33 @@ if ( function_exists ('register_sidebar')) {
 /************************************admin scripts and styles for the theme*******************************************/
 /*********************************************************************************************************************/
 function theme_front_scripts() {
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('popper-js',THEME_THEMEROOT.'/node_modules/popper.js/dist/umd/popper.min.js', array('jquery'),'1.0',true);
-    wp_enqueue_script('bootstrap-js',THEME_THEMEROOT.'/node_modules/bootstrap/dist/js/bootstrap.min.js', array('jquery'),'1.0',true);
+    // wp_enqueue_script('jquery');
+    // wp_enqueue_script('popper-js',THEME_THEMEROOT.'/node_modules/popper.js/dist/umd/popper.min.js', array('jquery'),'1.0',true);
+    // wp_enqueue_script('bootstrap-js',THEME_THEMEROOT.'/node_modules/bootstrap/dist/js/bootstrap.min.js', array('jquery'),'1.0',true);    
+    // wp_enqueue_script('mmenu-js',THEME_THEMEROOT.'/node_modules/mmenu-js/src/mmenu.js', array('jquery'),'1.0',false);
+    // wp_enqueue_script('custom-js',THEME_JS.'/custom.js', array('jquery'),'1.0',true);
+    
+    wp_enqueue_script('require-js',THEME_JS.'/require.js', array(),'1.0',true);
+    $customArr = array(
+        'theme_root' => THEME_THEMEROOT
+    );
+    wp_localize_script( 'require-js', 'CUSTOM_PARAMS', $customArr );
+
     $api_key = ( get_field( 'google_api' , 'option' ) ) ? get_field( 'google_api' , 'option' ) : 'AIzaSyB_DH4yRoGB0aoM3IZFvWOIP2qNbFh_bIs' ;
     wp_enqueue_script('googleapis-js','https://maps.googleapis.com/maps/api/js?key='.$api_key, array('jquery'),'1.0',true);
     wp_enqueue_script('acf-map-js',THEME_JS.'/acf_map.js', array('jquery'),'1.0',true);
-    wp_enqueue_script('mmenu-js',THEME_THEMEROOT.'/node_modules/mmenu-js/src/mmenu.js', array('jquery'),'1.0',false);
-	wp_enqueue_script('custom-js',THEME_JS.'/custom.js', array('jquery'),'1.0',true);
+
+
 }
 add_action('wp_enqueue_scripts', 'theme_front_scripts');
+
+function add_scripts_attributes( $tag, $handle, $src ) {
+    if ( 'require-js' === $handle ) {
+        $tag = str_replace( 'src=', 'data-main="'.THEME_JS.'/main.js" src=', $tag );
+    }
+    return $tag;
+}
+add_filter( 'script_loader_tag', 'add_scripts_attributes', 10, 3 );
 
 // custom front styles
 function theme_front_styles() {
