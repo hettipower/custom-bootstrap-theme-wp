@@ -7,3 +7,4 @@ Custom Bootstrap Theme Wordpress
 
 ### Version 2.0
 * Updated to Node Package Manager 2019/07/30
+* Added requirejs 2019/08/05
