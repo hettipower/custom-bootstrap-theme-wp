@@ -117,6 +117,7 @@ function theme_filter_wp_mail_from($email){
 /*********************************************defines include*********************************************************/
 //Required Plugin
 require_once ('inc/admin/tgm-plugin-activation/class-tgm-plugin-activation.php');
+require_once ('inc/lib/Mobile_Detect.php');
 
 add_action( 'tgmpa_register', 'theme_required_plugins_register' );
 function theme_required_plugins_register() {
