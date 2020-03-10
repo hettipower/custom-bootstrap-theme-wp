@@ -4,10 +4,10 @@
 /***********************************************************************************************************************/
 define('THEME_SITE_URL',home_url());
 define('THEME_THEMEROOT',get_stylesheet_directory_uri()); 
-define('THEME_IMAGES',THEME_THEMEROOT.'/assets/images');
-define('THEME_JS',THEME_THEMEROOT.'/assets/js');
-define('THEME_CSS',THEME_THEMEROOT.'/assets/css');
-update_option( 'maya_logo', THEME_IMAGES.'/maya-logo.png' );
+define('THEME_IMAGES',THEME_THEMEROOT.'/images');
+define('THEME_JS',THEME_THEMEROOT.'/js');
+define('THEME_CSS',THEME_THEMEROOT.'/css');
+
 /**********************************************************************************************************************/
 /****************************************defines theme supports*******************************************************/
 /**********************************************************************************************************************/
@@ -31,39 +31,37 @@ if ( function_exists ('register_sidebar')) {
 /************************************admin scripts and styles for the theme*******************************************/
 /*********************************************************************************************************************/
 function theme_front_scripts() {
-    // wp_enqueue_script('jquery');
-    // wp_enqueue_script('popper-js',THEME_THEMEROOT.'/node_modules/popper.js/dist/umd/popper.min.js', array('jquery'),'1.0',true);
-    // wp_enqueue_script('bootstrap-js',THEME_THEMEROOT.'/node_modules/bootstrap/dist/js/bootstrap.min.js', array('jquery'),'1.0',true);    
-    // wp_enqueue_script('mmenu-js',THEME_THEMEROOT.'/node_modules/mmenu-js/src/mmenu.js', array('jquery'),'1.0',false);
-    // wp_enqueue_script('custom-js',THEME_JS.'/custom.js', array('jquery'),'1.0',true);
-    
-    wp_enqueue_script('require-js',THEME_JS.'/require.js', array(),'1.0',true);
-    $customArr = array(
-        'theme_root' => THEME_THEMEROOT
-    );
-    wp_localize_script( 'require-js', 'CUSTOM_PARAMS', $customArr );
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('popper-js','https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', array('jquery'),'1.0',true);
+    wp_script_add_data( 'popper-js', 'integrity', 'sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W' );
+    wp_script_add_data( 'popper-js', 'crossorigin', 'anonymous' );
 
+    wp_enqueue_script('bootstrap-js','https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery'),'1.0',true);
+    wp_script_add_data( 'bootstrap-js', 'integrity', 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' );
+    wp_script_add_data( 'bootstrap-js', 'crossorigin', 'anonymous' );
+
+    wp_enqueue_script('webfont-js','https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js', array('jquery'),'1.0',true);
     $api_key = ( get_field( 'google_api' , 'option' ) ) ? get_field( 'google_api' , 'option' ) : 'AIzaSyB_DH4yRoGB0aoM3IZFvWOIP2qNbFh_bIs' ;
     wp_enqueue_script('googleapis-js','https://maps.googleapis.com/maps/api/js?key='.$api_key, array('jquery'),'1.0',true);
     wp_enqueue_script('acf-map-js',THEME_JS.'/acf_map.js', array('jquery'),'1.0',true);
-
-
+    wp_enqueue_script('mmenu-js','https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.6/jquery.mmenu.all.js', array('jquery'),'1.0',false);
+	wp_enqueue_script('custom-js',THEME_JS.'/custom.js', array('jquery'),'1.0',true);
 }
 add_action('wp_enqueue_scripts', 'theme_front_scripts');
-
-function add_scripts_attributes( $tag, $handle, $src ) {
-    if ( 'require-js' === $handle ) {
-        $tag = str_replace( 'src=', 'data-main="'.THEME_JS.'/main.js" src=', $tag );
-    }
-    return $tag;
-}
-add_filter( 'script_loader_tag', 'add_scripts_attributes', 10, 3 );
 
 // custom front styles
 function theme_front_styles() {
     global $wp_styles;
     wp_enqueue_style('theme-styles',THEME_THEMEROOT.'/style.css', array(),'1.0','screen');
-    wp_enqueue_style('master-styles',THEME_CSS.'/master.min.css', array(),'1.0','screen');
+    wp_enqueue_style('master-styles',THEME_CSS.'/master.css', array(),'1.0','screen');
+    wp_enqueue_style('bootstrap-styles','https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(),'1.0','screen');
+    wp_enqueue_style('mmenu-styles','https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.6/jquery.mmenu.all.css', array(),'1.0','screen');
+    wp_enqueue_style('fontawesome-styles','https://use.fontawesome.com/releases/v5.7.2/css/all.css', array(),'1.0','screen');
+
+    $wp_styles->add_data( 'fontawesome-styles', 'integrity', 'sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr' );
+    $wp_styles->add_data( 'fontawesome-styles', 'crossorigin', 'anonymous' );
+    $wp_styles->add_data( 'bootstrap-styles', 'integrity', 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' );
+    $wp_styles->add_data( 'bootstrap-styles', 'crossorigin', 'anonymous' );
 }
 add_action('wp_print_styles', 'theme_front_styles');
 
@@ -118,7 +116,7 @@ function theme_filter_wp_mail_from($email){
 /**********************************************************************************************************************/
 /*********************************************defines include*********************************************************/
 //Required Plugin
-require_once ('inc/admin/TGM-Plugin-Activation/class-tgm-plugin-activation.php');
+require_once ('inc/admin/tgm-plugin-activation/class-tgm-plugin-activation.php');
 
 add_action( 'tgmpa_register', 'theme_required_plugins_register' );
 function theme_required_plugins_register() {
@@ -152,7 +150,7 @@ function theme_required_plugins_register() {
         array(
             'name'                  => 'Advanced Custom Fields Pro', // The plugin name
             'slug'                  => 'advanced-custom-fields-pro', // The plugin slug (typically the folder name)
-            'source'                => THEME_THEMEROOT . '/inc/admin/TGM-Plugin-Activation/plugins/advanced-custom-fields-pro.zip', // The plugin source
+            'source'                => THEME_THEMEROOT . '/inc/admin/tgm-plugin-activation/plugins/advanced-custom-fields-pro.zip', // The plugin source
             'required'              => true, // If false, the plugin is only 'recommended' instead of required
             'version'               => '', // E.g. 1.0.0. If set, the active plugin must be this version or higher, otherwise a notice is presented
             'force_activation'      => false, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch
@@ -172,7 +170,7 @@ function theme_required_plugins_register() {
         array(
             'name'                  => 'Advanced Custom Fields: Theme Code Pro', // The plugin name
             'slug'                  => 'acf-theme-code-pro', // The plugin slug (typically the folder name)
-            'source'                => THEME_THEMEROOT . '/inc/admin/TGM-Plugin-Activation/plugins/acf-theme-code-pro.zip', // The plugin source
+            'source'                => THEME_THEMEROOT . '/inc/admin/tgm-plugin-activation/plugins/acf-theme-code-pro.zip', // The plugin source
             'required'              => true, // If false, the plugin is only 'recommended' instead of required
             'version'               => '', // E.g. 1.0.0. If set, the active plugin must be this version or higher, otherwise a notice is presented
             'force_activation'      => false, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch
