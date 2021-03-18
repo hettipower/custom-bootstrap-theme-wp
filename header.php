@@ -1,7 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	
+	<!-- Primary Meta Tags -->
 	<title><?php wp_title('|',true,'right');?><?php bloginfo('name');?></title>
+	<meta name="title" content="<?php bloginfo('name');?>">
+	<meta name="description" content="<?php bloginfo('description');?>">
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://findmyguru.lk/">
+	<meta property="og:title" content="<?php bloginfo('name');?>">
+	<meta property="og:description" content="<?php bloginfo('description');?>">
+	<meta property="og:image" content="<?php the_field('site_logo' , 'option'); ?>">
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://findmyguru.lk/">
+	<meta property="twitter:title" content="<?php bloginfo('name');?>">
+	<meta property="twitter:description" content="<?php bloginfo('description');?>">
+	<meta property="twitter:image" content="<?php the_field('site_logo' , 'option'); ?>">
+
+
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<?php if( get_field( 'favicon' , 'option' ) ): ?>
