@@ -1,6 +1,6 @@
 FROM debian:10.8
 LABEL "repository"="https://github.com/hettipower/custom-bootstrap-theme-wp"
-LABEL "maintainer"="Tharindu Hettiarachchi"
+LABEL "maintainer"="Lars Gohr"
 
 RUN apt update \
 	&& apt -y upgrade \
